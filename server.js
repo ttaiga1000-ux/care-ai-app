@@ -1,7 +1,6 @@
-import 'dotenv/config';  // ファイルの先頭に追加
+import 'dotenv/config';
 import express from "express";
 import bodyParser from "body-parser";
-import path from "path";
 import advice from "./api/advice.js";
 
 const app = express();
@@ -10,7 +9,10 @@ app.use(bodyParser.json());
 // API
 app.post("/api/advice", advice);
 
-// フロント
-app.use(express.static("dist"));
+// トップページ用の簡単なルート
+app.get("/", (req, res) => {
+  res.send("<h1>Care AI App is running!</h1>");
+});
 
-app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
