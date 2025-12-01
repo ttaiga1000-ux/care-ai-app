@@ -1,3 +1,4 @@
+import 'dotenv/config';  // ファイルの先頭に追加
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
@@ -13,3 +14,4 @@ app.post("/api/advice", advice);
 app.use(express.static("dist"));
 
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+
