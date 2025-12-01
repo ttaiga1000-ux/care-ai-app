@@ -1,23 +1,16 @@
-import 'dotenv/config';
 import express from "express";
-import bodyParser from "body-parser";
 import path from "path";
-import advice from "./api/advice.js";
+import { fileURLToPath } from "url";
 
 const app = express();
-app.use(bodyParser.json());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// API
-app.post("/api/advice", advice);
+app.use(express.static(path.join(__dirname, "public")));
 
-// フロント用（dist フォルダがある場合）
-app.use(express.static("dist"));
-
-// トップページ確認用
-app.get("/", (req, res) => {
-  res.send("Care AI App is running! ✅");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// サーバー起動
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
